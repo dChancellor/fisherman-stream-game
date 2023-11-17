@@ -1,24 +1,42 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { Fish } from "./Fish";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const waterElement = document.getElementById("water");
+const pauseButton = document.querySelector("button[name='pause']");
+const startButton = document.querySelector("button[name='start']");
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const activeFish = new Map();
+
+function makeFish() {
+  console.log("fish made!");
+  let fish = new Fish();
+  const fishElement = fish.fishElement;
+  fishElement.style.left = `${fish.position.x}%`;
+  waterElement?.appendChild(fishElement);
+  activeFish.set(fish.id, fish);
+}
+type GameState = {
+  gameClock: number | undefined;
+  isGamePaused: boolean;
+  gameInterval: number;
+};
+const gameState: GameState = {
+  gameClock: undefined,
+  isGamePaused: false,
+  gameInterval: 5000,
+};
+function startGame() {
+  gameState.isGamePaused = false;
+  console.log("starting game...");
+  //gameState.gameClock = setInterval(makeFish, gameState.gameInterval);
+}
+
+function pauseGame() {
+  gameState.isGamePaused = true;
+  console.log("pausing game...");
+  console.log("here are the active fish", activeFish);
+  clearInterval(gameState.gameClock);
+}
+
+pauseButton?.addEventListener("click", pauseGame);
+startButton?.addEventListener("click", startGame);
+startGame();

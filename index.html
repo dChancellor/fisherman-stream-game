@@ -1,13 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <title>Fisherman Game</title>
+</head>
+
+<body>
+  <script type="module" src="/src/main.ts"></script>
+  <div class="buttonpanel">
+    <button name="start">Start</button>
+    <button name="pause">Pause</button>
+  </div>
+  <div id="water"></div>
+  <div id="dock"></div>
+  <div id="fisherman">
+    <div id="rod">
+      <div id="line"></div>
+      <div class="caught-fish small"></div>
+      <div class="caught-fish medium"></div>
+      <div class="caught-fish big"></div>
+    </div>
+  </div>
+</body>
+
 </html>
