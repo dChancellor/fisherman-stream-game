@@ -34,6 +34,7 @@ export class Fish {
         this.position.x > 18 &&
         !gameState.fishCaughtOnLine
       ) {
+        console.log(this.fishElement);
         this.bit();
         return;
       }
@@ -68,7 +69,9 @@ export class Fish {
     this.tryAndGetAway();
   }
 
-  caught() {}
+  caught() {
+    gameState.fishCaughtOnLine = null;
+  }
   tryAndGetAway() {
     setTimeout(() => {
       const newPosition = getRandomInRange(this.position.x, 5);
