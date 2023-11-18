@@ -4,3 +4,7 @@ export function getRandomInRange(base: number, range: number) {
 
   return minPossible + Math.random() * (maxPossible - minPossible);
 }
+
+export function radiansToDegrees(radians: number) {
+  return radians * (180 / Math.PI);
+}
