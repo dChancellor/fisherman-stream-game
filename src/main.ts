@@ -11,7 +11,7 @@ function makeFish() {
   if (activeFish.size > gameState.mostActiveFish) return;
   let fish = new Fish();
   const fishElement = fish.fishElement;
-  fishElement.style.left = `${fish.position.x}%`;
+  fishElement.style.left = `${fish.position.x}px`;
   waterElement?.appendChild(fishElement);
   activeFish.set(fish.id, fish);
 }
@@ -27,7 +27,7 @@ export const gameState: GameState = {
   isGamePaused: false,
   gameInterval: 1000,
   fishCaughtOnLine: null,
-  mostActiveFish: 10,
+  mostActiveFish: 20,
 };
 function startGame() {
   gameState.isGamePaused = false;

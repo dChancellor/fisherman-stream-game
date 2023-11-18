@@ -1,4 +1,4 @@
-import { alignFishingLine, gameState } from "./main";
+import { alignFishingLine, fishingLine, gameState } from "./main";
 import { getRandomInRange } from "./utils";
 
 type FishSize = "big" | "medium" | "small";
@@ -16,7 +16,7 @@ export class Fish {
     const fishSize =
       sizeRandomizer > 80 ? "big" : sizeRandomizer > 50 ? "medium" : "small";
     this.size = size || fishSize; // Can supply size if you want to tie it to sub tier - otherwise, random
-    this.position = { x: Math.random() * 100, y: 0 };
+    this.position = { x: Math.random() * window.innerWidth, y: 0 };
     this.isSwimming = true;
     const fishElement = document.createElement("div");
     this.fishElement = fishElement;
@@ -27,24 +27,22 @@ export class Fish {
   }
 
   swim() {
-    setTimeout(() => {
+    setInterval(() => {
       if (!this.isSwimming) return;
       if (
-        this.position.x < 20 &&
-        this.position.x > 18 &&
+        this.position.x < 220 &&
+        this.position.x > 180 &&
         !gameState.fishCaughtOnLine
       ) {
-        console.log(this.fishElement);
         this.bit();
         return;
       }
       this.goToNewPosition();
-      this.swim();
     }, 3000);
   }
 
   goToNewPosition(newX?: number) {
-    newX = newX ? newX : getRandomInRange(this.position.x, 20);
+    newX = newX ? newX : getRandomInRange(this.position.x, 200);
     const isGettingAway = this.position.x < newX ? true : false;
     if (isGettingAway) {
       this.fishElement.style.scale = "-1 1";
@@ -52,37 +50,39 @@ export class Fish {
       this.fishElement.style.scale = "1 1";
     }
     this.position.x = newX;
-    this.fishElement.style.left = `${newX}%`;
+    this.fishElement.style.left = `${newX}px`;
     return newX;
   }
 
   bit() {
+    if (gameState.fishCaughtOnLine) return;
     this.isSwimming = false;
     gameState.fishCaughtOnLine = this;
     this.fishElement.style.background = "red";
     // This is the initial pulling away attempt to get some space
-    const newPosition = Math.random() * 20 + 30;
+    const newPosition = this.position.x + Math.random() * 20 + 100;
     this.fishElement.style.scale = "-1 1";
     this.goToNewPosition(newPosition);
-    alignFishingLine((newPosition / 100) * window.innerWidth + 10);
+    alignFishingLine(newPosition);
     // This starts the catching cycle
     this.tryAndGetAway();
   }
 
   caught() {
     gameState.fishCaughtOnLine = null;
+    fishingLine?.removeAttribute("style");
   }
   tryAndGetAway() {
     setTimeout(() => {
-      const newPosition = getRandomInRange(this.position.x, 5);
-      alignFishingLine((newPosition / 100) * window.innerWidth);
-      this.goToNewPosition(newPosition);
-      if (this.position.x < 20) {
+      if (this.position.x < 200) {
         this.fishElement.style.rotate = "45deg";
         this.caught();
-      } else {
-        this.tryAndGetAway();
+        return;
       }
+      const newPosition = getRandomInRange(this.position.x, 200);
+      alignFishingLine(newPosition);
+      this.goToNewPosition(newPosition);
+      this.tryAndGetAway();
     }, 3000);
   }
   stop() {

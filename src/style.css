@@ -11,6 +11,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   align-items: center;
+  overflow: hidden;
 }
 .main {
   position: relative;
@@ -31,7 +32,7 @@ body {
 }
 #dock {
   height: 1rem;
-  width: 10rem;
+  width: 160px;
   background-color: brown;
   position: absolute;
   bottom: 5rem;
