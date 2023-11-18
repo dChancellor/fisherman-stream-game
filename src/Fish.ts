@@ -16,7 +16,7 @@ export class Fish {
     const fishSize =
       sizeRandomizer > 80 ? "big" : sizeRandomizer > 50 ? "medium" : "small";
     this.size = size || fishSize; // Can supply size if you want to tie it to sub tier - otherwise, random
-    this.position = { x: Math.random() * 20, y: 0 };
+    this.position = { x: Math.random() * 100, y: 0 };
     this.isSwimming = true;
     const fishElement = document.createElement("div");
     this.fishElement = fishElement;
@@ -30,8 +30,8 @@ export class Fish {
     setTimeout(() => {
       if (!this.isSwimming) return;
       if (
-        this.position.x < 30 &&
-        this.position.x > 10 &&
+        this.position.x < 20 &&
+        this.position.x > 18 &&
         !gameState.fishCaughtOnLine
       ) {
         this.bit();
@@ -68,10 +68,7 @@ export class Fish {
     this.tryAndGetAway();
   }
 
-  caught() {
-    this.fishElement.style.top = `${Math.random() * 10}rem`;
-    this.fishElement.style.left = `${Math.random() * 5}rem`;
-  }
+  caught() {}
   tryAndGetAway() {
     setTimeout(() => {
       const newPosition = getRandomInRange(this.position.x, 5);
