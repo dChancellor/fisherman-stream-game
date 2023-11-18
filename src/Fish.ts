@@ -1,4 +1,4 @@
-import { alignFishingLine, fishingRod, gameState } from "./main";
+import { alignFishingLine, gameState } from "./main";
 import { getRandomInRange } from "./utils";
 
 type FishSize = "big" | "medium" | "small";
